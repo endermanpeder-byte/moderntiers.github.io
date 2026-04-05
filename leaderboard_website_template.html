@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+}
+
+header {
+  background: #020617;
+  padding: 15px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-bottom: 2px solid #1e293b;
+}
+
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+.card {
+  background: #020617;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #1e293b;
+}
+
+.rank {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.name {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.score {
+  font-weight: bold;
+}
+
+button {
+  background: #2563eb;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.admin {
+  text-align: center;
+  margin-top: 30px;
+}
+
+input {
+  padding: 8px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+}
+</style>
+</head>
+<body>
+
+<header>Leaderboard</header>
+
+<div class="container" id="leaderboard"></div>
+
+<div class="admin">
+  <h3>Admin Panel</h3>
+  <input id="name" placeholder="Player name">
+  <input id="score" placeholder="Score" type="number">
+  <button onclick="addPlayer()">Add</button>
+</div>
+
+<script>
+let data = [
+  {name: "Player1", score: 100},
+  {name: "Player2", score: 80},
+  {name: "Player3", score: 60}
+];
+
+function render() {
+  data.sort((a,b) => b.score - a.score);
+  const board = document.getElementById("leaderboard");
+  board.innerHTML = "";
+
+  data.forEach((p, i) => {
+    board.innerHTML += `
+      <div class="card">
+        <div class="rank">#${i+1}</div>
+        <div class="name">${p.name}</div>
+        <div class="score">${p.score}</div>
+      </div>
+    `;
+  });
+}
+
+function addPlayer() {
+  const name = document.getElementById("name").value;
+  const score = parseInt(document.getElementById("score").value);
+
+  if (!name || isNaN(score)) return;
+
+  data.push({name, score});
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
